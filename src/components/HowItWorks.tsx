@@ -4,30 +4,30 @@ import { GraduationCap, Users, FileText, ShieldCheck } from "lucide-react";
 const steps = [
   {
     icon: GraduationCap,
-    title: "Credential Minted",
-    description: "Institution issues an ERC-721 credential NFT to a reviewer's wallet, encoding qualification type on-chain.",
-    detail: "CredentialNFT.mint(reviewer, typeId)",
+    title: "Get Verified",
+    description: "A trusted institution confirms you’re eligible to review and issues a credential to your wallet.",
+    detail: "Institution-issued credential",
     color: "text-primary",
   },
   {
     icon: Users,
-    title: "Semaphore Enrollment",
-    description: "Qualified reviewer generates a Semaphore identity and is enrolled into the credential-type group.",
-    detail: "ReviewerGroupRegistry.addQualifiedReviewer()",
+    title: "Join the Reviewer Network",
+    description: "Your eligibility is recognized so you can submit qualified reviews—without exposing who you are.",
+    detail: "Eligibility registration",
     color: "text-primary",
   },
   {
     icon: FileText,
-    title: "ZK Review Submitted",
-    description: "Reviewer submits a zero-knowledge proof binding their review to the manuscript — no wallet signature revealed.",
-    detail: "PeerReviewRegistry.submitReview(proof)",
+    title: "Submit Your Review",
+    description: "Write your review and submit it anonymously. The protocol keeps it linked to the manuscript for integrity.",
+    detail: "Anonymous submission",
     color: "text-primary",
   },
   {
     icon: ShieldCheck,
     title: "Publicly Verifiable",
-    description: "Anyone can verify the review was submitted by a qualified group member, without knowing who.",
-    detail: "On-chain event + IPFS content",
+    description: "Editors and readers can verify the review is qualified and untampered—while your identity stays private.",
+    detail: "Verifiable record",
     color: "text-primary",
   },
 ];
@@ -44,10 +44,10 @@ const HowItWorks = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            From Credential to <span className="text-gradient-emerald">Proof</span>
+            How it <span className="text-gradient-emerald">works</span>
           </h2>
           <p className="font-serif text-lg text-muted-foreground max-w-xl mx-auto">
-            Four steps. Full anonymity. Complete accountability.
+            Simple for reviewers. Trusted for institutions. Verifiable for everyone.
           </p>
         </motion.div>
 
@@ -79,9 +79,9 @@ const HowItWorks = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   {step.description}
                 </p>
-                <code className="text-xs font-mono text-primary/70 bg-muted px-2 py-1 rounded">
+                <div className="text-xs text-muted-foreground bg-muted/60 border border-border px-2 py-1 rounded">
                   {step.detail}
-                </code>
+                </div>
               </motion.div>
             ))}
           </div>

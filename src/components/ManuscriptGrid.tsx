@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
-import { MOCK_MANUSCRIPTS, truncateHash, type DemoManuscript } from "@/data/mock-data";
 import { ExternalLink, CheckCircle, XCircle, MessageSquare } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api, type DemoManuscript } from "@/lib/api";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
 
 const ManuscriptCard = ({ ms }: { ms: DemoManuscript }) => (
   <div className="bg-card border border-border rounded-xl p-5 card-shadow flex flex-col gap-3 hover:border-glow transition-colors">
@@ -26,33 +31,43 @@ const ManuscriptCard = ({ ms }: { ms: DemoManuscript }) => (
       </span>
     </div>
 
-    <div className="flex flex-col gap-1 text-xs font-mono text-muted-foreground">
-      <div className="flex items-center gap-1.5">
-        <span className="text-secondary-foreground">DOI</span>
-        {truncateHash(ms.doiHash, 8)}
-      </div>
-      <div className="flex items-center gap-1.5">
-        <span className="text-secondary-foreground">IPFS</span>
+    <Collapsible>
+      <CollapsibleTrigger className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors">
+        Details <ChevronDown className="w-3.5 h-3.5" />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="mt-2 text-xs text-muted-foreground">
         <a
-          href={`https://w3s.link/ipfs/${ms.ipfsCid}`}
+          href={`https://gateway.pinata.cloud/ipfs/${ms.ipfsCid}`}
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-primary transition-colors inline-flex items-center gap-1"
         >
-          {truncateHash(ms.ipfsCid, 8)}
-          <ExternalLink className="w-3 h-3" />
+          View manuscript document <ExternalLink className="w-3 h-3" />
         </a>
-      </div>
+      </CollapsibleContent>
+    </Collapsible>
+
+    <div className="pt-2 flex items-center justify-between gap-3">
+      <Button asChild size="sm" className="w-full">
+        <Link to={`/app/manuscripts/${ms.id}`}>View details</Link>
+      </Button>
     </div>
   </div>
 );
 
 const ManuscriptGrid = () => {
+  const { data } = useQuery({
+    queryKey: ["demo-overview"],
+    queryFn: api.demoOverview,
+  });
+
+  const manuscripts = data?.manuscripts ?? [];
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6 text-foreground">Manuscripts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {MOCK_MANUSCRIPTS.map((ms, i) => (
+        {manuscripts.map((ms, i) => (
           <motion.div
             key={ms.id}
             initial={{ opacity: 0, y: 20 }}

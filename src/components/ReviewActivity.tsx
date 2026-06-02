@@ -1,14 +1,16 @@
 import { motion } from "framer-motion";
-import { MOCK_REVIEWS, MOCK_CHAIN_CONFIG, truncateHash, type DemoReview } from "@/data/mock-data";
+import { truncateHash } from "@/data/mock-data";
 import { ExternalLink, Copy, ShieldCheck } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api, type DemoReview } from "@/lib/api";
 
 const ReviewItem = ({ review }: { review: DemoReview }) => {
-  const explorer = MOCK_CHAIN_CONFIG.blockExplorerUrl;
-  const date = new Date(review.timestamp);
+  const { data: config } = useQuery({ queryKey: ["demo-config"], queryFn: api.demoConfig });
+  const explorer = config?.blockExplorerUrl ?? null;
 
   return (
     <div className="flex gap-4 py-4 border-b border-border last:border-0">
-      {/* ZK indicator */}
+      {/* Verification indicator */}
       <div className="shrink-0 mt-1">
         <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
           <ShieldCheck className="w-4 h-4 text-primary" />
@@ -24,13 +26,13 @@ const ReviewItem = ({ review }: { review: DemoReview }) => {
             Group {review.groupId}
           </span>
           <span className="text-xs text-muted-foreground ml-auto">
-            {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            block {Number(review.blockNumber).toLocaleString()}
           </span>
         </div>
 
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono text-muted-foreground">
           <span>
-            <span className="text-secondary-foreground">hash</span>{" "}
+            <span className="text-secondary-foreground">reference</span>{" "}
             {truncateHash(review.reviewContentHash, 6)}
           </span>
 
@@ -68,16 +70,22 @@ const ReviewItem = ({ review }: { review: DemoReview }) => {
 };
 
 const ReviewActivity = () => {
+  const { data } = useQuery({
+    queryKey: ["demo-overview"],
+    queryFn: api.demoOverview,
+  });
+  const reviews = data?.reviews ?? [];
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6 text-foreground">Review Activity</h2>
       <div className="bg-card border border-border rounded-xl card-shadow overflow-hidden">
         <div className="px-5 py-3 border-b border-border flex items-center gap-2 text-xs font-mono text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-          <span>Anonymous ZK-verified reviews • {MOCK_REVIEWS.length} events</span>
+          <span>Anonymous verified reviews • {reviews.length} events</span>
         </div>
         <div className="px-5">
-          {MOCK_REVIEWS.map((review, i) => (
+          {reviews.map((review, i) => (
             <motion.div
               key={review.txHash}
               initial={{ opacity: 0, x: -10 }}

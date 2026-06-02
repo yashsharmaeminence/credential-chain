@@ -1,10 +1,15 @@
-import { MOCK_CHAIN_CONFIG, truncateAddress } from "@/data/mock-data";
+import { truncateAddress } from "@/data/mock-data";
 import { Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 const NetworkStrip = () => {
   const [copied, setCopied] = useState<string | null>(null);
-  const config = MOCK_CHAIN_CONFIG;
+  const { data: config } = useQuery({
+    queryKey: ["demo-config"],
+    queryFn: api.demoConfig,
+  });
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -12,20 +17,22 @@ const NetworkStrip = () => {
     setTimeout(() => setCopied(null), 1500);
   };
 
-  const contracts = [
-    { label: "CredentialNFT", addr: config.contracts.credentialNFT },
-    { label: "GroupRegistry", addr: config.contracts.reviewerGroupRegistry },
-    { label: "ManuscriptReg", addr: config.contracts.manuscriptRegistry },
-    { label: "PeerReviewReg", addr: config.contracts.peerReviewRegistry },
-  ];
+  const contracts = config
+    ? [
+        { label: "CredentialNFT", addr: config.contracts.credentialNFT },
+        { label: "GroupRegistry", addr: config.contracts.reviewerGroupRegistry },
+        { label: "ManuscriptReg", addr: config.contracts.manuscriptRegistry },
+        { label: "PeerReviewReg", addr: config.contracts.peerReviewRegistry },
+      ]
+    : [];
 
   return (
     <div className="border-y border-border bg-surface-elevated">
       <div className="container max-w-6xl px-6 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-          <span className="text-foreground font-semibold">{config.chainName}</span>
-          <span className="text-muted-foreground">ID {config.chainId}</span>
+          <span className="text-foreground font-semibold">{config?.chainName ?? "Loading…"}</span>
+          {config && <span className="text-muted-foreground">ID {config.chainId}</span>}
         </div>
 
         <div className="hidden sm:block h-4 w-px bg-border" />
@@ -43,7 +50,7 @@ const NetworkStrip = () => {
           </button>
         ))}
 
-        {config.blockExplorerUrl && (
+        {config?.blockExplorerUrl && (
           <a
             href={config.blockExplorerUrl}
             target="_blank"

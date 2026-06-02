@@ -1,15 +1,21 @@
 import { motion } from "framer-motion";
-import { MOCK_STATS } from "@/data/mock-data";
 import { FileText, MessageSquare, Award, Users } from "lucide-react";
-
-const tiles = [
-  { label: "Manuscripts", value: MOCK_STATS.totalManuscripts, icon: FileText },
-  { label: "Reviews", value: MOCK_STATS.totalReviews, icon: MessageSquare },
-  { label: "Credentials Minted", value: MOCK_STATS.totalCredentialsMinted, icon: Award },
-  { label: "Active Reviewers", value: MOCK_STATS.activeReviewers, icon: Users },
-];
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 const StatsTiles = () => {
+  const { data } = useQuery({
+    queryKey: ["demo-overview"],
+    queryFn: api.demoOverview,
+  });
+
+  const tiles = [
+    { label: "Manuscripts", value: data?.stats.manuscriptCount ?? "—", icon: FileText },
+    { label: "Reviews", value: data?.stats.totalReviews ?? "—", icon: MessageSquare },
+    { label: "Credentials Minted", value: data?.stats.credentialsMinted ?? "—", icon: Award },
+    { label: "Reviewer Network", value: data?.stats.semaphoreGroupIdForDemoType ?? "—", icon: Users },
+  ];
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {tiles.map((tile, i) => (

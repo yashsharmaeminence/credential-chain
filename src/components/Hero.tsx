@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { Shield, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import LogoMark from "@/components/LogoMark";
 
-const Hero = ({ onOpenDemo }: { onOpenDemo: () => void }) => {
+const Hero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background grid */}
@@ -21,8 +23,10 @@ const Hero = ({ onOpenDemo }: { onOpenDemo: () => void }) => {
         >
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-glow bg-surface-elevated mb-8">
-            <Shield className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground">Zero-Knowledge Peer Review Protocol</span>
+            <div className="w-4 h-4 text-foreground">
+              <LogoMark className="w-4 h-4" />
+            </div>
+            <span className="text-sm font-medium text-muted-foreground">Qualified Anonymous Peer Review</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-6">
@@ -34,19 +38,18 @@ const Hero = ({ onOpenDemo }: { onOpenDemo: () => void }) => {
           </h1>
 
           <p className="font-serif text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Institution-issued credentials meet zero-knowledge proofs.
-            Reviewers prove qualification without revealing identity.
-            Every review is bound to on-chain evidence.
+            Institutions issue credentials, and privacy-preserving verification enables qualified anonymous reviews.
+            Reviews remain verifiable on-chain without exposing the reviewer’s identity.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={onOpenDemo}
+            <Link
+              to="/app/overview"
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold text-lg transition-all hover:brightness-110 glow-emerald"
             >
-              Explore Live Demo
+              Launch App
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
             <a
               href="#how-it-works"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg border border-border text-foreground font-medium text-lg transition-colors hover:bg-secondary"
@@ -63,22 +66,15 @@ const Hero = ({ onOpenDemo }: { onOpenDemo: () => void }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-16 max-w-xl mx-auto"
         >
-          <div className="bg-surface-elevated rounded-xl border border-border p-5 text-left font-mono text-sm">
+          <div className="bg-surface-elevated rounded-xl border border-border p-5 text-left text-sm">
             <div className="flex items-center gap-2 mb-3 text-muted-foreground">
-              <div className="w-3 h-3 rounded-full bg-destructive/60" />
               <div className="w-3 h-3 rounded-full bg-primary/40" />
               <div className="w-3 h-3 rounded-full bg-primary" />
-              <span className="ml-2 text-xs">PeerReviewRegistry.sol</span>
+              <span className="ml-2 text-xs font-mono">On-chain review record</span>
             </div>
-            <code className="text-muted-foreground">
-              <span className="text-primary">function</span>{" "}
-              <span className="text-foreground">submitReview</span>(
-              <br />
-              {"  "}manuscriptId, proof, contentHash
-              <br />
-              ) <span className="text-primary">→</span>{" "}
-              <span className="text-foreground">ReviewSubmitted</span> ✓
-            </code>
+            <div className="text-muted-foreground leading-relaxed">
+              Submit a review, publish a verifiable record, and attach the content link for public integrity.
+            </div>
           </div>
         </motion.div>
       </div>
