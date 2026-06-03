@@ -1,34 +1,38 @@
-# JournalsPro Protocol UI (`frontend/`)
+# JournalsPro Protocol UI
 
-This is the production-style React/Vite UI for the JournalsPro protocol.
+Standalone React/Vite UI for the [JournalsPro](https://github.com/yashsharmaeminence/JournalsPro) protocol. Deployed at [credential-chain.vercel.app](https://credential-chain.vercel.app).
 
 ## Run locally
 
-From repo root:
-
 ```bash
-pnpm install --no-frozen-lockfile
-pnpm dev:api
-pnpm dev:frontend
+npm install
+npm run dev
 ```
+
+The dev server starts on port 8080 by default.
 
 ## Configuration
 
-- **API base URL**: set `VITE_API_BASE_URL` when the API is on a different origin (otherwise omit it to use same-origin).
+Set `VITE_API_BASE_URL` when the API runs on a different origin (omit it for same-origin).
 
-Create `frontend/.env.local`:
+Create `.env.local`:
 
 ```bash
 VITE_API_BASE_URL="http://127.0.0.1:3001"
 ```
 
-## Documentation
+See [`.env.example`](./.env.example) for all supported variables.
 
-See the root [`README.md`](../README.md) for:
-- protocol overview and architecture
-- contract deploy / verification
-- API endpoints
-- environment variables
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Protocol documentation
+
+For architecture, contract deploy, API endpoints, and backend setup, see the main [JournalsPro repository](https://github.com/yashsharmaeminence/JournalsPro).
 
 ## Security note
 

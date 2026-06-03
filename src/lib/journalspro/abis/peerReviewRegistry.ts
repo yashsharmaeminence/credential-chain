@@ -1,0 +1,48 @@
+export const peerReviewRegistryAbi = [
+  {
+    type: "function",
+    name: "totalReviews",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "reviewCountByManuscript",
+    stateMutability: "view",
+    inputs: [{ name: "manuscriptId", type: "uint256" }],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "event",
+    name: "ReviewSubmitted",
+    inputs: [
+      { name: "groupId", type: "uint256", indexed: true },
+      { name: "manuscriptId", type: "uint256", indexed: true },
+      { name: "nullifier", type: "uint256", indexed: false },
+      { name: "message", type: "uint256", indexed: false },
+      { name: "scope", type: "uint256", indexed: false },
+      { name: "reviewContentHash", type: "bytes32", indexed: false },
+      { name: "reviewIpfsCid", type: "string", indexed: false },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "function",
+    name: "submitReview",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "groupId", type: "uint256" },
+      { name: "manuscriptId", type: "uint256" },
+      { name: "merkleTreeDepth", type: "uint256" },
+      { name: "merkleTreeRoot", type: "uint256" },
+      { name: "nullifier", type: "uint256" },
+      { name: "message", type: "uint256" },
+      { name: "scope", type: "uint256" },
+      { name: "points", type: "uint256[8]" },
+      { name: "reviewContentHash", type: "bytes32" },
+      { name: "reviewIpfsCid", type: "string" },
+    ],
+    outputs: [],
+  },
+] as const;

@@ -63,8 +63,9 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.9",
     "zod": "^3.25.76",
-    "@journalspro/zk": "file:../packages/zk",
-    "@journalspro/shared": "file:../packages/shared",
+    "@semaphore-protocol/group": "4.14.2",
+    "@semaphore-protocol/identity": "4.14.2",
+    "@semaphore-protocol/proof": "4.14.2",
     "viem": "^2.21.0"
   },
   "devDependencies": {

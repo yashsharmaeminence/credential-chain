@@ -1,4 +1,4 @@
-import { Identity } from "@journalspro/zk";
+import { Identity } from "@/lib/journalspro/zk";
 
 const STORAGE_KEY = "journalspro.semaphoreIdentity.v1";
 

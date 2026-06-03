@@ -12,8 +12,8 @@ import {
   loadIdentityEncrypted,
   saveIdentityEncrypted,
 } from "@/lib/identity-store";
-import { Identity, generateJournalReviewProof, reviewContentHashFromText, semaphoreProofToSubmitArgs, type SemaphoreProof } from "@journalspro/zk";
-import { appChainFromEnv, peerReviewRegistryAbi } from "@journalspro/shared";
+import { Identity, generateJournalReviewProof, reviewContentHashFromText, semaphoreProofToSubmitArgs, type SemaphoreProof } from "@/lib/journalspro/zk";
+import { appChainFromEnv, peerReviewRegistryAbi } from "@/lib/journalspro/shared";
 import { createPublicClient, createWalletClient, custom, http } from "viem";
 
 type Step = "identity" | "enroll" | "write" | "proof" | "submit" | "done";
